@@ -1,7 +1,6 @@
 # ConnectFlow Project Diary
 
-## Day 1 — 13 October 2026
-
+## Day 1 
 ### Objective
 Define the SIH26129 problem and establish the engineering repository.
 
@@ -35,7 +34,7 @@ Committed
 
 
 
-## Day 2 — 13 October 2026
+## Day 2 
 
 ### Objective
 Convert the interoperability problem into a defined MVP.
@@ -69,3 +68,38 @@ Define API contracts, the canonical data model, and the initial architecture dia
 
 ### Git Commit
 Commited
+
+## Day 3 
+
+### Objective
+Design the initial system architecture and define API contracts.
+
+### Work Completed
+- Defined the responsibilities of the React frontend, ConnectFlow API, PostgreSQL database, and mock registry.
+- Documented the initial data flow and failure boundaries.
+- Defined API contracts for applications, consent, eligibility checks, exchanges, and timelines.
+- Established a canonical response format.
+- Documented initial architecture decisions.
+- Identified idempotency and consent enforcement as important reliability requirements.
+
+### Key Learning
+An API contract specifies expected requests, responses, errors, and operation semantics. An architecture explains how components use those contracts to collaborate.
+
+### Decisions
+- Use a modular Node.js backend.
+- Keep the mock registry independently implemented.
+- Use PostgreSQL for ConnectFlow-owned records.
+- Use synthetic data until real integration is authorised.
+- Defer message brokers until the workflow requires asynchronous processing.
+
+### Open Questions
+- What authentication approach should the prototype use?
+- How should the mock registry authenticate ConnectFlow?
+- How will transactions protect application and exchange state?
+- How should retries behave after a timeout where the source may already have processed a request?
+
+### Next Session
+Review the API contracts, confirm operation semantics, and begin the initial backend implementation.
+
+### Git Commit
+Committed
