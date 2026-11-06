@@ -104,6 +104,19 @@ Review the API contracts, confirm operation semantics, and begin the initial bac
 ### Git Commit
 Committed
 
-### Day 4 
-Set up the Node.js backend and build a working health-check API.
 
+## Day 4 – Backend Initialization
+
+### Completed
+- Initialized Node.js and Express backend.
+- Configured environment variables using dotenv.
+- Added Helmet, CORS, and JSON parsing middleware.
+- Created API health-check endpoint.
+- Verified GET /api/v1/health returns HTTP 200.
+- Confirmed backend runs successfully on port 5000.
+
+### Outcome
+ConnectFlow backend foundation is running successfully.
+
+### Next
+Design and implement the Application module.
