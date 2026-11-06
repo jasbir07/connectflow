@@ -103,3 +103,7 @@ Review the API contracts, confirm operation semantics, and begin the initial bac
 
 ### Git Commit
 Committed
+
+### Day 4 
+Set up the Node.js backend and build a working health-check API.
+
