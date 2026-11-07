@@ -120,3 +120,76 @@ ConnectFlow backend foundation is running successfully.
 
 ### Next
 Design and implement the Application module.
+
+
+# Day 5 – PostgreSQL Integration and Application Module
+
+## Objective
+Set up a local PostgreSQL database and implement the initial Application Management APIs for ConnectFlow.
+
+## Tasks Completed
+
+### 1. PostgreSQL Setup
+- Installed PostgreSQL 18.6 on the local Windows machine.
+- Installed and configured pgAdmin 4.
+- Created the `connectflow` database.
+- Verified database access using the pgAdmin Query Tool.
+
+### 2. Backend Database Integration
+- Installed the `pg` Node.js package.
+- Configured database credentials using environment variables.
+- Created a reusable database connection module at `src/config/db.js`.
+- Implemented a PostgreSQL connection pool.
+- Verified connectivity using the SQL query `SELECT NOW()`.
+- Updated server startup to establish the database connection before starting Express.
+
+### 3. Applications Database Table
+Created the `applications` table with the following fields:
+- `id` – UUID primary key.
+- `applicant_name` – Applicant's name.
+- `applicant_email` – Applicant's email.
+- `programme_name` – Requested training programme.
+- `status` – Application status with default value `PENDING`.
+- `created_at` – Application creation timestamp.
+- `updated_at` – Last update timestamp.
+
+Added database constraints for required fields and valid application statuses.
+
+### 4. Application Management APIs
+
+**POST `/api/v1/applications`**
+- Implemented application creation.
+- Added required-field validation.
+- Used parameterized SQL queries to prevent SQL injection.
+- Generated unique application UUIDs.
+- Returned the created application with HTTP 201.
+
+**GET `/api/v1/applications/:id`**
+- Implemented application retrieval using UUID.
+- Added handling for applications that do not exist.
+- Returned HTTP 200 for successful retrieval.
+- Returned HTTP 404 when an application was not found.
+
+### 5. Architecture and Code Organization
+Followed a layered backend architecture:
+
+- Routes – API endpoint definitions.
+- Controllers – HTTP request and response handling.
+- Services – Business logic and database operations.
+- Config – Database connection management.
+
+## Testing and Verification
+- Successfully connected the Express backend to PostgreSQL.
+- Tested application creation using Postman.
+- Verified that application records were persisted in PostgreSQL.
+- Tested application retrieval using the generated UUID.
+- Confirmed that the API response matched the stored database record.
+
+## Outcome
+Successfully established PostgreSQL integration and implemented the first two Application Management APIs. ConnectFlow can now create and retrieve citizen training applications using persistent database storage.
+
+## Next Steps
+- Implement request validation and error handling.
+- Add application status update functionality.
+- Build the independent Eligibility Registry system.
+- Begin integrating the Application Portal with the Eligibility Registry through ConnectFlow.
