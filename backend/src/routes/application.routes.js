@@ -6,8 +6,13 @@ const {
   getApplicationById,
 } = require("../controllers/application.controller");
 
-router.post("/", createApplication);
+const {
+  createApplicationValidator,
+  applicationIdValidator,
+} = require("../validators/application.validator");
 
-router.get("/:id", getApplicationById);
+router.post("/", createApplicationValidator, createApplication);
+
+router.get("/:id", applicationIdValidator, getApplicationById);
 
 module.exports = router;

@@ -193,3 +193,73 @@ Successfully established PostgreSQL integration and implemented the first two Ap
 - Add application status update functionality.
 - Build the independent Eligibility Registry system.
 - Begin integrating the Application Portal with the Eligibility Registry through ConnectFlow.
+
+
+
+# Day 6 – Input Validation and Error Handling
+
+## Objective
+Improve the reliability of ConnectFlow's Application Management APIs by implementing request validation and handling invalid client input.
+
+## Tasks Completed
+
+### 1. Installed Validation Library
+- Installed `express-validator` in the backend.
+- Integrated validation middleware into the Express application.
+
+### 2. Created Application Validation Middleware
+Created `src/validators/application.validator.js`.
+
+Implemented validation for:
+
+**Application Creation**
+- Applicant name is required.
+- Applicant name cannot exceed 100 characters.
+- Email is required and must have a valid email format.
+- Email cannot exceed 150 characters.
+- Programme name is required.
+- Programme name cannot exceed 150 characters.
+- Leading and trailing whitespace is removed.
+
+**Application Retrieval**
+- Validated application IDs using UUID format validation.
+- Rejected malformed application IDs before executing database queries.
+
+### 3. Implemented Reusable Validation Handler
+- Used `validationResult()` to collect validation errors.
+- Created a reusable `validateRequest` middleware.
+- Returned HTTP `400 Bad Request` when validation failed.
+- Returned structured validation errors containing field names and messages.
+- Used `next()` to pass valid requests to the controller.
+
+### 4. Integrated Validation into Routes
+Updated `src/routes/application.routes.js`.
+
+Implemented the following request flows:
+
+- POST `/api/v1/applications` → Create Application Validator → Controller.
+- GET `/api/v1/applications/:id` → UUID Validator → Controller.
+
+Invalid requests are rejected before reaching the controller or database.
+
+### 5. Testing
+Tested the following scenarios:
+
+| Test case | Expected response |
+|---|---|
+| Valid application | 201 Created |
+| Empty applicant name | 400 Bad Request |
+| Invalid email | 400 Bad Request |
+| Invalid UUID | 400 Bad Request |
+| Valid but nonexistent UUID | 404 Not Found |
+
+All implemented validation scenarios were tested successfully.
+
+## Outcome
+Implemented reusable request validation and improved API reliability. ConnectFlow now rejects malformed requests before they reach the business logic or database layer.
+
+## Next Steps
+- Implement application status update functionality.
+- Improve centralized error handling.
+- Develop the independent Eligibility Registry system.
+- Integrate both systems through ConnectFlow middleware.
