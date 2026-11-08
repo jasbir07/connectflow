@@ -263,3 +263,44 @@ Implemented reusable request validation and improved API reliability. ConnectFlo
 - Improve centralized error handling.
 - Develop the independent Eligibility Registry system.
 - Integrate both systems through ConnectFlow middleware.
+
+
+
+## Day 7 – Application Status Management
+
+### Objective
+Implement controlled application status updates with business rules and database transaction management.
+
+### Tasks Completed
+
+1. **Status Lifecycle Management**
+   - Defined allowed application status transitions: PENDING, PROCESSING, APPROVED, REJECTED, and FAILED.
+   - Prevented invalid status transitions.
+   - Allowed FAILED applications to return to PROCESSING for retries.
+
+2. **Status Update Service**
+   - Implemented `updateApplicationStatus()` in the service layer.
+   - Used PostgreSQL transactions (`BEGIN`, `COMMIT`, `ROLLBACK`).
+   - Used `SELECT FOR UPDATE` to prevent concurrent status updates from conflicting.
+   - Updated `updated_at` whenever the status changed.
+
+3. **API Implementation**
+   - Created the status update controller.
+   - Added status validation using express-validator.
+   - Implemented `PATCH /api/v1/applications/:id/status`.
+
+4. **Testing**
+   - Verified successful status transitions using Postman.
+   - Tested invalid status transitions and received HTTP 409.
+   - Tested invalid status values and received HTTP 400.
+   - Verified nonexistent applications return HTTP 404.
+   - Confirmed updated application statuses and timestamps in PostgreSQL.
+
+### Outcome
+Successfully implemented application status management with controlled state transitions, validation, transaction handling, and database-level row locking.
+
+### Next Steps
+- Build an independent Eligibility Registry service.
+- Create synthetic citizen eligibility records.
+- Expose APIs for checking eligibility.
+- Integrate the Application Portal with the Eligibility Registry through ConnectFlow.

@@ -62,5 +62,44 @@ const getApplicationById = async (req, res) => {
   }
 };
 
+const updateApplicationStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
 
-module.exports = { createApplication, getApplicationById };
+    const result = await applicationService.updateApplicationStatus(id, status);
+
+    if (result.type === "NOT_FOUND") {
+      return res.status(404).json({
+        success: false,
+        message: "Application not found",
+      });
+    }
+
+    if (result.type === "INVALID_TRANSITION") {
+      return res.status(409).json({
+        success: false,
+        message: `Cannot change application status from ${result.currentStatus} to ${status}`,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Application status updated successfully",
+      data: result.application,
+    });
+  } catch (error) {
+    console.error("Update application status error:", error.message);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+module.exports = {
+  createApplication,
+  getApplicationById,
+  updateApplicationStatus,
+};

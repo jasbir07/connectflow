@@ -52,7 +52,25 @@ const applicationIdValidator = [
   validateRequest,
 ];
 
+const updateStatusValidator = [
+  body("status")
+    .trim()
+    .notEmpty()
+    .withMessage("Status is required")
+    .isIn([
+      "PENDING",
+      "PROCESSING",
+      "APPROVED",
+      "REJECTED",
+      "FAILED",
+    ])
+    .withMessage("Invalid application status"),
+
+  validateRequest,
+];
+
 module.exports = {
   createApplicationValidator,
   applicationIdValidator,
+    updateStatusValidator,
 };
